@@ -1,0 +1,225 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>
+            kya karu hayeee!!
+        </title>
+    </head>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #262626;
+            color: #e60c0c;
+        }
+        .container{
+            width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        .contain #inputfield{
+            width: 100%;
+            padding: 8px;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        #but{
+            font-size: 22px;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+           outline: none;
+        }
+        #but:hover{
+            background-color: rgba(158, 147, 147, 0.616);
+        }
+        .listitem{
+            position: relative;
+            color: green;
+            font-size: 18px;
+            background-color: rgb(231, 231, 160);
+            padding: 5px 50px 5px 10px ;
+            margin-bottom: 7px;
+            cursor: pointer;
+        }
+        .span{
+            position: absolute;
+            top: 7px;
+            left: 290px;
+            color: red;
+            font-weight: 600;
+           cursor: pointer;
+
+        }
+        
+        .completed{
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="contain">
+                <input type="text" placeholder="Add something...." id="inputfield">
+                <button type="button" id="but">Add</button>
+
+            </div>
+
+            <ol id="orderlist">
+
+            </ol>
+        </div>
+        
+
+        <!-- <script>
+        
+   const inputField = document.querySelector("#inputfield");
+   const addBut = document.querySelector("#but");
+   const listContainer = document.querySelector("#orderlist");
+
+    
+     addBut.addEventListener("click", function(){
+         if(inputField.value.trim() === ""){
+        alert("please add some task First !!");
+        return;
+      }
+        let listItem = document.createElement("li");
+        listItem.innerText = inputField.value;
+        listContainer.appendChild(listItem);
+        inputField.value = "";
+        listItem.classList.add("listitem");
+        saveData();
+
+ // function to create x sign to delete the task
+       listItem.addEventListener("click", function(){
+       listItem.classList.toggle("completed");
+
+   })
+
+   let span = document.createElement("span");
+       span.innerHTML = "\u00d7";
+       listItem.appendChild(span);
+       span.classList.add("span");
+
+       span.addEventListener("click" , function(e){
+        e.stopPropagation();
+        listContainer.removeChild(listItem);
+        saveData();
+       });
+ })
+
+  // storage for date after reload an dvisit again 
+
+     function saveData(){
+        localStorage.setItem("data", listContainer.innerHTML);
+     }
+     function showData(){
+        listContainer.innerHTML = localStorage.getItem("data") || "";
+     }
+     // reattach the event listener to restor the elements
+
+     document.querySelectorAll("#orderlist li").forEach((listItem)=>{
+        listItem.addEventListener("click", function(){
+            listItem.classList.toggle("completed");
+            saveData();
+        })
+
+     // to check weather the delete sopn works or not
+      let span = listItem.querySelector("span");
+      if(!span){
+         span = document.createElement("span");
+        span.innerHTML = "\u00d7";
+        span.classList.add("span");
+        listItem.appendChild(span);
+
+      }
+
+      span.addEventListener("click" , function(e){
+        e.stopPropagation();
+        listContainer.removeChild(listItem);
+        saveData();
+      });
+     });
+     showData();
+        </script> -->
+            <script>
+            const inputField = document.querySelector("#inputfield");
+    const addBut = document.querySelector("#but");
+    const listContainer = document.querySelector("#orderlist");
+
+    addBut.addEventListener("click", function () {
+        if (inputField.value.trim() === "") {
+            alert("Please add some task first!!");
+            return;
+        }
+
+        let listItem = document.createElement("li");
+        listItem.innerText = inputField.value;
+        listItem.classList.add("listitem");
+
+
+        // Add delete span
+        let span = document.createElement("span");
+        span.innerHTML = "\u00d7";
+        span.classList.add("span");
+        listItem.appendChild(span);
+
+        // Toggle complete
+        listItem.addEventListener("click", function () {
+            listItem.classList.toggle("completed");
+            saveData();
+        });
+
+        // Delete item
+        span.addEventListener("click", function (e) {
+            e.stopPropagation(); // prevent also toggling completion
+            listItem.remove();
+            saveData();
+        });
+
+        listContainer.appendChild(listItem);
+        inputField.value = "";
+        saveData();
+    });
+
+    // Save data to localStorage
+    function saveData() {
+        localStorage.setItem("data", listContainer.innerHTML);
+    }
+
+    // Load and restore event listeners
+    function showData() {
+        listContainer.innerHTML = localStorage.getItem("data") || "";
+
+        // Reattach event listeners to restored items
+        document.querySelectorAll("#orderlist li").forEach((listItem) => {
+            listItem.addEventListener("click", function () {
+                listItem.classList.toggle("completed");
+                saveData();
+            });
+
+            let span = listItem.querySelector("span");
+            if (!span) {
+                span = document.createElement("span");
+                span.innerHTML = "\u00d7";
+                span.classList.add("span");
+                listItem.appendChild(span);
+            }
+
+            span.addEventListener("click", function (e) {
+                e.stopPropagation();
+                listItem.remove();
+                saveData();
+            });
+        });
+    }
+
+    showData();
+    </script>
+        </body>
+    </html>
